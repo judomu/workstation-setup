@@ -1,0 +1,45 @@
+for_window [title="(?i)pasystray*"] floating enable
+for_window [title="(?i)gnome-control-center*"] floating enable
+
+bindsym $mod+m exec "xrandr --output eDP1 --scale 1x1 --mode 1600x900 --output DP2-2 --primary --auto --right-of eDP1; xrandr --output DP2-1 --auto --right-of DP2-2; xrandr --output DP1-2 --auto --right-of eDP1; xrandr --output DP1-1 --auto --right-of DP1-2; feh --bg-scale --randomize ~/Bilder/Wallpaper/*"
+bindsym $mod+shift+m exec "xrandr -s 0 && feh --bg-scale --randomize ~/Bilder/Wallpaper/*"
+
+# i3 move a workspace to another monitor (multi monitor setup)
+mode "move_workspace" {
+ bindsym Up move workspace to output up
+ bindsym Down move workspace to output down
+ bindsym Left move workspace to output left
+ bindsym Right move workspace to output right
+
+ bindsym Escape mode "default"
+}
+
+bindsym $mod+o mode "move_workspace"
+
+exec --no-startup-id feh --bg-scale --randomize ~/Bilder/Wallpaper/*
+
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Pause mode "$mode_system"
+bindsym $mod+End mode "$mode_system"
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+
+# volume control
+exec pasystray
+
+# flameshot
+exec flameshot

@@ -1,0 +1,110 @@
+---
+- name: Add i3 custom config
+  blockinfile:
+    block: "{{ lookup('file', 'i3-config') }}"
+    path: "/home/{{username}}/.config/i3/config"
+    backup: yes
+    create: yes
+    owner: "{{username}}"
+- name: Upgrade pacman packages
+  pacman:
+    update_cache: yes
+    upgrade: yes
+- name: Install aur helpers
+  include_tasks: aur.yml
+- name: Install backup setup
+  include_tasks: backup.yml
+
+- name: Install thunderbird
+  become: yes
+  pacman:
+    name: thunderbird
+    state: present
+- name: Install thunderbird-i18n-de
+  become: yes
+  pacman:
+    name: thunderbird-i18n-de
+    state: present
+- name: Install flameshot
+  become: yes
+  pacman:
+    name: flameshot
+    state: present
+
+- name: Install s3fs
+  become: yes
+  pacman:
+    name: s3fs-fuse
+    state: present
+- name: Copy .aws.cred
+  copy:
+    src: .aws.cred
+    dest: "/home/{{username}}/.aws.cred"
+    backup: yes
+    owner: "{{username}}"
+- name: Install keepassxc
+  become: yes
+  pacman:
+    name: keepassxc
+    state: present
+- name: Create bin directory
+  file:
+    path: "/home/{{username}}/bin"
+    state: directory
+- name: Template init-s3fs.sh
+  template:
+    src: init-s3fs.sh
+    dest: "/home/{{username}}/bin/init-s3fs"
+    backup: yes
+    owner: "{{username}}"
+    mode: +x
+- name: Install chromium
+  become: yes
+  pacman:
+    name: chromium
+    state: present
+- name: Install spotify
+  snap:
+    name:
+      - spotify
+- name: Install sweethome3d
+  become: yes
+  pacman:
+    name: sweethome3d
+    state: present
+- name: Install etcher
+  aur: name=balena-etcher
+  become: yes
+  become_user: aur_builder
+- name: Install teamviewer
+  aur: name=teamviewer
+  become: yes
+  become_user: aur_builder
+- name: Install Printer
+  become: yes
+  pacman:
+    name: cups
+    state: present
+- name: Enable cups
+  systemd:
+    name: cups.service
+    state: started
+    enabled: yes
+- name: Install Postscript
+  become: yes
+  pacman:
+    name: ghostscript
+    state: present
+- name: Install pasystray
+  aur: name=pasystray
+  become: yes
+  become_user: aur_builder
+- name: Mount nas storage
+  ansible.posix.mount:
+    path: /media/jmweb-nas
+    src: jmweb-nas:/volume1/photo # jmweb-nas = locally resolvable dns entry
+    fstype: nfs
+    opts: noauto,rsize=8192,wsize=8192,timeo=14,nfsvers=3,intr
+    state: mounted
+  tags:
+    - nas

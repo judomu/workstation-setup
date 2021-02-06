@@ -1,0 +1,16 @@
+---
+- name: Install duplicity
+  become: yes
+  pacman:
+    name: duplicity
+    state: present
+- name: Checkout Duplicity backup script
+  git:
+    repo: 'https://github.com/zertrin/duplicity-backup.sh.git'
+    dest: "/home/{{username}}/bin/.duplicity-backup"
+- name:
+  file:
+    src: "/home/{{username}}/bin/.duplicity-backup/duplicity-backup.sh"
+    dest: "/home/{{username}}/bin/duplicity-backup"
+    mode: +x
+    state: link

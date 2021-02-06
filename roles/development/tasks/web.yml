@@ -1,0 +1,20 @@
+---
+- name: Install filezilla
+  become: yes
+  pacman:
+    name: filezilla
+    state: present
+- name: Install hugo
+  become: yes
+  pacman:
+    name: hugo
+    state: present
+- name: Install npm
+  become: yes
+  pacman:
+    name: npm
+    state: present
+- name: Install nvm
+  aur: name=nvm
+  become: yes
+  become_user: aur_builder

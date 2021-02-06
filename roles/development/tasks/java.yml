@@ -1,0 +1,14 @@
+---
+- name: Install sdkman
+  shell: |
+    curl -s "https://get.sdkman.io" | bash
+- name: Install jdk8-openjdk
+  become: yes
+  pacman:
+    name: jdk8-openjdk
+    state: present
+- name: Install maven
+  become: yes
+  pacman:
+    name: maven
+    state: present

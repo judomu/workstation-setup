@@ -1,0 +1,44 @@
+---
+- name: Install containerd
+  become: yes
+  pacman:
+    name: containerd
+    state: present
+- name: Install kubeadm
+  become: yes
+  pacman:
+    name: kubeadm
+    state: present
+- name: Install kubectl
+  become: yes
+  pacman:
+    name: kubectl
+    state: present
+- name: Install kubectx
+  become: yes
+  pacman:
+    name: kubectx
+    state: present
+- name: Install k9s
+  become: yes
+  pacman:
+    name: k9s
+    state: present
+- name: Install google-cloud-sdk
+  aur: name=google-cloud-sdk
+  become: yes
+  become_user: aur_builder
+- name: Install k3d # lightweight kubernetes distribution
+  shell: |
+    curl -s "https://raw.githubusercontent.com/rancher/k3d/main/install.sh" | bash
+  become: yes
+- name: Install kubeseal
+  become: yes
+  pacman:
+    name: kubeseal
+    state: present
+- name: Install fluxctl
+  become: yes
+  pacman:
+    name: fluxctl
+    state: present

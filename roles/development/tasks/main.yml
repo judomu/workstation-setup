@@ -1,0 +1,44 @@
+---
+- name: Install docker
+  include_tasks: docker.yml
+- name: Install k8s
+  include_tasks: k8s.yml
+- name: Install shell
+  include_tasks:
+    file: shell.yml
+    apply:
+      tags: [shell]
+  tags: [shell]
+- name: Install java
+  include_tasks: java.yml
+- name: Install web
+  include_tasks: web.yml
+- name: Install wireshark-qt
+  become: yes
+  pacman:
+    name: wireshark-qt
+    state: present
+- name: Install jetbrains-toolbox
+  aur: name=jetbrains-toolbox
+  become: yes
+  become_user: aur_builder
+- name: Install atom
+  become: yes
+  pacman:
+    name: atom
+    state: present
+- name: Install postman, redis gui, robo3t
+  snap:
+    name:
+      - postman
+      - redis-desktop-manager
+      - robo3t-snap
+- name: Install go
+  become: yes
+  pacman:
+    name: go
+    state: present
+- name: Install rocketchat
+  aur: name=rocketchat-desktop
+  become: yes
+  become_user: aur_builder
