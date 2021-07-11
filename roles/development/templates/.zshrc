@@ -1,11 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 export GOPATH=$HOME/go
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:/opt/:$PATH
+export RUBYPATH=$HOME/.gem/ruby/3.0.0
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$RUBYPATH/bin:/opt/:$PATH
 export CHROME_BIN=/usr/lib/chromium
 
 # OH-MY-ZSH
 
-export ZSH="/home/julian/.oh-my-zsh"
+export ZSH="/home/{{username}}/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -122,6 +123,8 @@ plugins=(
   minikube
   autojump
   fzf
+  #keychain
+  ssh-agent
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -192,6 +195,11 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # NVM
 source /usr/share/nvm/init-nvm.sh
+
+# aliases
+alias k="kubectl"
+alias kc="kubectx"
+alias kn="kubens"
 
 # SDKMAN
 
