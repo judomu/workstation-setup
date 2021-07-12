@@ -1,4 +1,8 @@
 ---
+- name: Copy manjaro i3 config
+  copy:
+    src: /etc/skel/.i3/config
+    dest: "/home/{{username}}/.config/i3/config"
 - name: Add i3 custom config
   blockinfile:
     block: "{{ lookup('file', 'i3-config') }}"
