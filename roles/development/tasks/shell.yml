@@ -4,14 +4,16 @@
   pacman:
     name: zsh
     state: present
-- name: Configure zsh as default shell (root)
-  shell: |
-    chsh -s /usr/bin/zsh
+- name: Check if oh-my-zsh exists
+  stat:
+    path: "/home/{{username}}/.oh-my-zsh"
+  register: ohmyzsh
 - name: Install oh-my-zsh
   become: yes
   become_user: "{{username}}"
   shell: |
     curl -s "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" | bash
+  when: ohmyzsh.stat.exists == false
 - name: Install zinit
   shell: |
     curl -s "https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh" | bash

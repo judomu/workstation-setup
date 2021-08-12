@@ -1,4 +1,6 @@
 # If you come from bash you might have to change your $PATH.
+export VISUAL=vim
+export EDITOR=vim
 export GOPATH=$HOME/go
 export RUBYPATH=$HOME/.gem/ruby/3.0.0
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$RUBYPATH/bin:/opt/:$PATH
@@ -204,5 +206,5 @@ alias kn="kubens"
 # SDKMAN
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/julian/.sdkman"
-[[ -s "/home/julian/.sdkman/bin/sdkman-init.sh" ]] && source "/home/julian/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="/home/{{username}}/.sdkman"
+[[ -s "/home/{{username}}/.sdkman/bin/sdkman-init.sh" ]] && source "/home/{{username}}/.sdkman/bin/sdkman-init.sh"
