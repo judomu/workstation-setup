@@ -203,6 +203,9 @@ alias k="kubectl"
 alias kc="kubectx"
 alias kn="kubens"
 
+# rvm
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+
 # SDKMAN
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
