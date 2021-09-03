@@ -33,23 +33,11 @@ Repo to setup my workstation (private + work), driven by [Ansible](https://www.a
 
 #### Solving known issues
 
-- Sound not working? Configure `/etc/modprobe/alsa.conf` with
-```
-options snd_hda_intel enable=0,1
-options snd slots=snd_hda_intel, thinkpad_acpi
-options snd_hda_intel index=0
-options thinkpad_acpi index=1
-```
 - WIFI not working? Install driver with `sudo pacman -S linux-headers` + `trizen -S rtw89-dkms-git`
-- Install pulse audio `sudo install_pulse` (maybe cleanup with `rm -r .config/pulse` if not working)
-- Flickering? Verify `/etc/X11/xorg.conf.d/20-amdgpu.conf` contains
-```
-Section "Device"
-        Identifier "AMD"
-        Driver "amdgpu"
-        Option "TearFree" "true"
-EndSection
-```
+- Audio not working?
+-- Switch to pulse: `sudo install_pulse` (maybe cleanup with `rm -r .config/pulse` if not working)
+-- Use legacy `module-detect` instead of `module-udev-detec` (see https://gitlab.freedesktop.org/pulseaudio/pulseaudio/-/issues/1030)
+- Flickering Issues? Kill Compton: `mod+t`
 
 #### inxi
 
